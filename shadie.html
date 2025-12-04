@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love ❤️</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff2e63;
+            --secondary: #ff9eb5;
+            --accent: #ff7b9c;
+            --dark: #252a34;
+            --light: #fff5f7;
+            --gradient: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 50%, #ff9eb5 100%);
+            --shadow: 0 10px 30px rgba(255, 46, 99, 0.2);
+            --shadow-lg: 0 20px 50px rgba(255, 46, 99, 0.3);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            color: var(--dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .photo-heart-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+        }
+
+        .heart-frame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            transform: rotate(45deg);
+            border-radius: 25px;
+            animation: heartbeat 1.2s infinite ease-in-out;
+            box-shadow: 0 0 40px var(--primary);
+            z-index: 2;
+        }
+
+        .heart-frame::before,
+        .heart-frame::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .heart-frame::before {
+            top: -50%;
+            left: 0;
+        }
+
+        .heart-frame::after {
+            top: 0;
+            left: -50%;
+        }
+
+        .photo-container {
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            border-radius: 20px;
+            overflow: hidden;
+            z-index: 3;
+            border: 4px solid white;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-container:hover .photo {
+            transform: scale(1.05);
+        }
+
+        .heart-glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,46,99,0.4) 0%, rgba(255,46,99,0) 70%);
+            animation: pulse 2s infinite;
+            z-index: 1;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 0 0 30px 0;
+            display: none;
+        }
+
+        .photo-gallery.show {
+            display: grid;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 3px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+
+        .gallery-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-photo {
+            transform: scale(1.1);
+        }
+
+        /* Video Section - UPDATED FOR PORTRAIT VIDEO */
+        .video-container {
+            margin: 0 0 30px 0;
+            display: none;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .video-container.show {
+            display: block;
+        }
+
+        .video-wrapper {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: #000;
+            max-width: 100%;
+        }
+
+        /* Portrait video container */
+        .portrait-video-container {
+            position: relative;
+            width: 100%;
+            max-width: 280px; /* Optimal width for portrait video */
+            margin: 0 auto;
+        }
+
+        .special-video {
+            width: 100%;
+            height: auto;
+            max-height: 500px; /* Max height for portrait */
+            display: block;
+            border-radius: 15px;
+        }
+
+        .video-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 15px;
+            color: white;
+            text-align: center;
+            border-radius: 0 0 18px 18px;
+        }
+
+        .video-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .video-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .video-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-btn:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* Video thumbnail overlay styling */
+        .video-thumbnail-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .video-thumbnail-overlay {
+            opacity: 1;
+        }
+
+        .video-thumbnail-overlay i {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+
+        .message-box {
+            background: var(--light);
+            border-radius: 18px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .message-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .message i {
+            color: var(--primary);
+            margin: 0 5px;
+        }
+
+        .secret-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s ease;
+            margin-top: 20px;
+        }
+
+        .secret-container.open {
+            max-height: 300px;
+        }
+
+        .secret-message {
+            background: linear-gradient(135deg, #fff0f3, #ffe8ec);
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px dashed var(--secondary);
+            text-align: center;
+        }
+
+        .secret-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .secret-text {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 46, 99, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 46, 99, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .cta-button i {
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover i {
+            transform: scale(1.2);
+        }
+
+        .secondary-button {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+        }
+
+        .tertiary-button {
+            background: linear-gradient(90deg, #11998e, #38ef7d);
+        }
+
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.show {
+            display: flex;
+            opacity: 1;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 46, 99, 0.8);
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: rotate(45deg) scale(1); }
+            5% { transform: rotate(45deg) scale(1.05); }
+            10% { transform: rotate(45deg) scale(1); }
+            15% { transform: rotate(45deg) scale(1.08); }
+            20% { transform: rotate(45deg) scale(1); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        @media (max-width: 480px) {
+            .card { padding: 30px 20px; }
+            .title { font-size: 2rem; }
+            .photo-heart-container { width: 160px; height: 160px; }
+            .photo-container { width: 130px; height: 130px; }
+            .message { font-size: 1.1rem; }
+            .photo-gallery { gap: 10px; }
+            .portrait-video-container { max-width: 220px; }
+            .special-video { max-height: 400px; }
+            .video-title { font-size: 1rem; }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --dark: #f0f0f0;
+                --light: #2a2a3a;
+            }
+            .card { background: rgba(40, 40, 60, 0.95); }
+            .message-box { background: #323248; }
+            .secret-message { background: linear-gradient(135deg, #3a2a3a, #2a2a3a); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="photo-heart-container">
+                    <div class="heart-frame"></div>
+                    <div class="photo-container">
+                        <img src="images/shadie.jfif" 
+                             alt="My Beautiful Girlfriend" 
+                             class="photo"
+                             id="mainPhoto">
+                    </div>
+                    <div class="heart-glow"></div>
+                </div>
+                <h1 class="title">For My Beautiful Shadie From Derek</h1>
+                <p class="subtitle">You are the beat of my heart ❤️</p>
+            </div>
+            
+            <div class="message-box">
+                <p class="message">
+                    <i class="fas fa-quote-left"></i>
+                    Every time I look at your photo, my heart skips a beat. 
+                    Your smile lights up my world in ways words could never describe.
+                    <i class="fas fa-quote-right"></i>
+                </p>
+                <div class="secret-container" id="secretContainer">
+                    <div class="secret-message">
+                        <h3 class="secret-title">
+                            <i class="fas fa-lock-open"></i>
+                            To The Most Beautiful Soul Shadie
+                        </h3>
+                        <p class="secret-text">
+                            In your eyes, I found my home. In your smile, I found my joy. 
+                            In your heart, I found my forever. No matter where life takes us, 
+                            I'll always be by your side.
+                        </p>
+                        <p class="secret-text" style="margin-top: 15px; font-weight: 600; color: var(--primary);">
+                            You're my everything, today and always. ❤️
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="cta-button" id="secretButton">
+                <i class="fas fa-heart"></i>
+                <span>Open My Heart's Secret</span>
+            </button>
+            
+            <button class="cta-button secondary-button" id="galleryButton">
+                <i class="fas fa-images"></i>
+                <span>View Our Memories</span>
+            </button>
+            
+            <!-- Gallery appears BELOW the gallery button -->
+            <div class="photo-gallery" id="photoGallery">
+                <div class="gallery-item" onclick="openLightbox(this)">
+                    <img src="images/shadie.jfif" alt="Memory 1" class="gallery-photo">
+                </div>
+                
+                <div class="gallery-item" onclick="openLightbox(this)">
+                    <img src="images/shadiee.jfif" alt="Memory 3" class="gallery-photo">
+               
+                </div>
+                <!-- Video thumbnail in gallery -->
+                <div class="gallery-item" onclick="showVideoSection(event)">
+                    <img src="images/shadiie.jfif" alt="Special Video" class="gallery-photo">
+                    <div class="video-thumbnail-overlay">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Our Special Video</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="cta-button tertiary-button" id="videoButton">
+                <i class="fas fa-video"></i>
+                <span>Watch Our Special Video</span>
+            </button>
+            
+            <!-- Video appears BELOW the video button -->
+            <div class="video-container" id="videoContainer">
+                <div class="video-wrapper">
+                    <div class="portrait-video-container">
+                        <video class="special-video" id="specialVideo" controls 
+                               poster="images/shadie.jfif"
+                               playsinline
+                               webkit-playsinline>
+                            <source src="shadie.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div class="video-overlay">
+                            <h3 class="video-title">A Special Memory Just For You 💖</h3>
+                            <div class="video-controls">
+                                <button class="video-btn" onclick="playVideo()">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <button class="video-btn" onclick="pauseVideo()">
+                                    <i class="fas fa-pause"></i>
+                                </button>
+                                <button class="video-btn" onclick="restartVideo()">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Made with <i class="fas fa-heart" style="color: var(--primary);"></i> By Derek just for you</p>
+            <p>💕 Every moment with you is precious 💕</p>
+        </div>
+    </div>
+
+    <!-- Lightbox for fullscreen photos -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img src="" alt="" class="lightbox-img" id="lightboxImg">
+    </div>
+
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const secretButton = document.getElementById('secretButton');
+            const galleryButton = document.getElementById('galleryButton');
+            const videoButton = document.getElementById('videoButton');
+            const secretContainer = document.getElementById('secretContainer');
+            const photoGallery = document.getElementById('photoGallery');
+            const videoContainer = document.getElementById('videoContainer');
+            const specialVideo = document.getElementById('specialVideo');
+            const floatingHearts = document.getElementById('floatingHearts');
+            const mainPhoto = document.getElementById('mainPhoto');
+            
+            let isSecretOpen = false;
+            let isGalleryOpen = false;
+            let isVideoOpen = false;
+            
+            // Create initial floating hearts
+            createFloatingHearts(5);
+            
+            // Detect video orientation
+            detectVideoOrientation();
+            
+            function detectVideoOrientation() {
+                specialVideo.addEventListener('loadedmetadata', function() {
+                    const isPortrait = this.videoHeight > this.videoWidth;
+                    
+                    if (isPortrait) {
+                        console.log("Portrait video detected");
+                        // Video is already styled for portrait
+                    } else {
+                        console.log("Landscape video detected");
+                        // Adjust styling for landscape
+                        const portraitContainer = document.querySelector('.portrait-video-container');
+                        portraitContainer.style.maxWidth = '100%';
+                        specialVideo.style.maxHeight = '300px';
+                    }
+                });
+            }
+            
+            // Secret message button
+            secretButton.addEventListener('click', function() {
+                isSecretOpen = !isSecretOpen;
+                
+                if (isSecretOpen) {
+                    secretContainer.classList.add('open');
+                    secretButton.innerHTML = '<i class="fas fa-heart-broken"></i><span>Close My Heart</span>';
+                    createHeartsBurst();
+                    createConfetti();
+                } else {
+                    secretContainer.classList.remove('open');
+                    secretButton.innerHTML = '<i class="fas fa-heart"></i><span>Open My Heart\'s Secret</span>';
+                }
+                
+                secretButton.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    secretButton.style.transform = '';
+                }, 150);
+            });
+            
+            // Gallery button - shows gallery BELOW the button
+            galleryButton.addEventListener('click', function() {
+                isGalleryOpen = !isGalleryOpen;
+                
+                if (isGalleryOpen) {
+                    photoGallery.classList.add('show');
+                    galleryButton.innerHTML = '<i class="fas fa-times"></i><span>Close Gallery</span>';
+                    
+                    // Hide video if open
+                    if (isVideoOpen) {
+                        videoContainer.classList.remove('show');
+                        videoButton.innerHTML = '<i class="fas fa-video"></i><span>Watch Our Special Video</span>';
+                        isVideoOpen = false;
+                        specialVideo.pause();
+                    }
+                    
+                    // Animate photo rotation in heart
+                    mainPhoto.style.transform = 'scale(1.1) rotate(-5deg)';
+                    setTimeout(() => {
+                        mainPhoto.style.transform = 'scale(1.05) rotate(5deg)';
+                    }, 300);
+                    setTimeout(() => {
+                        mainPhoto.style.transform = 'scale(1) rotate(0deg)';
+                    }, 600);
+                } else {
+                    photoGallery.classList.remove('show');
+                    galleryButton.innerHTML = '<i class="fas fa-images"></i><span>View Our Memories</span>';
+                }
+                
+                galleryButton.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    galleryButton.style.transform = '';
+                }, 150);
+            });
+            
+            // Video button - shows video BELOW the button
+            videoButton.addEventListener('click', function() {
+                isVideoOpen = !isVideoOpen;
+                
+                if (isVideoOpen) {
+                    videoContainer.classList.add('show');
+                    videoButton.innerHTML = '<i class="fas fa-times"></i><span>Close Video</span>';
+                    
+                    // Hide gallery if open
+                    if (isGalleryOpen) {
+                        photoGallery.classList.remove('show');
+                        galleryButton.innerHTML = '<i class="fas fa-images"></i><span>View Our Memories</span>';
+                        isGalleryOpen = false;
+                    }
+                    
+                    // Auto-play video (with user interaction)
+                    setTimeout(() => {
+                        specialVideo.play().catch(e => {
+                            console.log("Autoplay prevented:", e);
+                            // Show play button overlay
+                            showPlayPrompt();
+                        });
+                    }, 300);
+                    
+                    // Create video sparkles
+                    createVideoSparkles();
+                } else {
+                    videoContainer.classList.remove('show');
+                    videoButton.innerHTML = '<i class="fas fa-video"></i><span>Watch Our Special Video</span>';
+                    specialVideo.pause();
+                }
+                
+                videoButton.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    videoButton.style.transform = '';
+                }, 150);
+            });
+            
+            function showPlayPrompt() {
+                const overlay = document.createElement('div');
+                overlay.style.position = 'absolute';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.right = '0';
+                overlay.style.bottom = '0';
+                overlay.style.background = 'rgba(0,0,0,0.7)';
+                overlay.style.display = 'flex';
+                overlay.style.flexDirection = 'column';
+                overlay.style.alignItems = 'center';
+                overlay.style.justifyContent = 'center';
+                overlay.style.color = 'white';
+                overlay.style.fontSize = '1.2rem';
+                overlay.style.zIndex = '10';
+                overlay.style.borderRadius = '15px';
+                overlay.innerHTML = `
+                    <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                    <p>Tap to play our special video</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">(Tap anywhere on video)</p>
+                `;
+                
+                const videoWrapper = document.querySelector('.portrait-video-container');
+                videoWrapper.style.position = 'relative';
+                videoWrapper.appendChild(overlay);
+                
+                overlay.addEventListener('click', function() {
+                    specialVideo.play();
+                    overlay.remove();
+                });
+            }
+            
+            // Photo click animation
+            mainPhoto.addEventListener('click', function() {
+                this.style.transform = 'scale(1.2) rotate(-45deg)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1.05) rotate(-45deg)';
+                }, 200);
+                setTimeout(() => {
+                    this.style.transform = 'scale(1) rotate(-45deg)';
+                }, 400);
+                
+                // Create love sparkles around photo
+                createPhotoSparkles();
+            });
+            
+            // Video event listeners
+            specialVideo.addEventListener('play', function() {
+                console.log("Video started playing");
+                createVideoHearts();
+            });
+            
+            specialVideo.addEventListener('ended', function() {
+                console.log("Video ended");
+                createVideoEndCelebration();
+            });
+            
+            // Make video fullscreen on double click/tap
+            specialVideo.addEventListener('dblclick', function() {
+                if (specialVideo.requestFullscreen) {
+                    specialVideo.requestFullscreen();
+                } else if (specialVideo.webkitRequestFullscreen) {
+                    specialVideo.webkitRequestFullscreen();
+                } else if (specialVideo.mozRequestFullScreen) {
+                    specialVideo.mozRequestFullScreen();
+                }
+            });
+            
+            // Also allow single tap for mobile
+            specialVideo.addEventListener('click', function() {
+                // On mobile, single tap can toggle play/pause
+                if (this.paused) {
+                    this.play();
+                } else {
+                    this.pause();
+                }
+            });
+            
+            function createFloatingHearts(count) {
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        createFloatingHeart();
+                    }, i * 500);
+                }
+            }
+            
+            function createFloatingHeart() {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.style.position = 'fixed';
+                heart.style.fontSize = `${Math.random() * 20 + 15}px`;
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.top = '100vh';
+                heart.style.opacity = '0.7';
+                heart.style.zIndex = '-1';
+                heart.style.pointerEvents = 'none';
+                heart.style.animation = `float ${Math.random() * 5 + 5}s infinite ease-in-out`;
+                heart.style.animationDelay = `${Math.random() * 2}s`;
+                
+                floatingHearts.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 10000);
+            }
+            
+            function createHeartsBurst() {
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(() => {
+                        createBurstHeart();
+                    }, i * 50);
+                }
+            }
+            
+            function createBurstHeart() {
+                const heart = document.createElement('div');
+                heart.innerHTML = ['❤️', '💖', '💕', '💗', '💓', '💞'][Math.floor(Math.random() * 6)];
+                heart.style.position = 'fixed';
+                heart.style.fontSize = `${Math.random() * 25 + 20}px`;
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                heart.style.transform = 'translate(-50%, -50%)';
+                heart.style.opacity = '1';
+                heart.style.zIndex = '9999';
+                heart.style.pointerEvents = 'none';
+                heart.style.textShadow = '0 0 10px rgba(255, 46, 99, 0.8)';
+                
+                document.body.appendChild(heart);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = 2 + Math.random() * 3;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                let x = 0, y = 0;
+                let opacity = 1;
+                
+                const burstInterval = setInterval(() => {
+                    x += vx;
+                    y += vy;
+                    opacity -= 0.02;
+                    
+                    heart.style.left = `calc(50% + ${x}vw)`;
+                    heart.style.top = `calc(50% + ${y}vh)`;
+                    heart.style.opacity = opacity;
+                    
+                    if (opacity <= 0) {
+                        clearInterval(burstInterval);
+                        heart.remove();
+                    }
+                }, 30);
+            }
+            
+            function createConfetti() {
+                const colors = ['#ff2e63', '#ff9eb5', '#ffc3a0', '#ffafbd', '#ff7b9c'];
+                
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(() => {
+                        const confetti = document.createElement('div');
+                        confetti.style.position = 'fixed';
+                        confetti.style.width = '10px';
+                        confetti.style.height = '10px';
+                        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                        confetti.style.left = `${Math.random() * 100}vw`;
+                        confetti.style.top = '-10px';
+                        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                        confetti.style.zIndex = '9998';
+                        confetti.style.pointerEvents = 'none';
+                        confetti.style.opacity = '0.8';
+                        
+                        document.body.appendChild(confetti);
+                        
+                        const animation = confetti.animate([
+                            { transform: 'translateY(0) rotate(0deg)', opacity: 0.8 },
+                            { transform: `translateY(100vh) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                        ], {
+                            duration: 2000 + Math.random() * 2000,
+                            easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                        });
+                        
+                        animation.onfinish = () => confetti.remove();
+                    }, i * 30);
+                }
+            }
+            
+            function createPhotoSparkles() {
+                const photoContainer = mainPhoto.parentElement;
+                const rect = photoContainer.getBoundingClientRect();
+                
+                for (let i = 0; i < 15; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.innerHTML = '✨';
+                    sparkle.style.position = 'fixed';
+                    sparkle.style.fontSize = '15px';
+                    sparkle.style.left = `${rect.left + rect.width/2 + (Math.random() - 0.5) * 100}px`;
+                    sparkle.style.top = `${rect.top + rect.height/2 + (Math.random() - 0.5) * 100}px`;
+                    sparkle.style.zIndex = '100';
+                    sparkle.style.pointerEvents = 'none';
+                    sparkle.style.opacity = '0.8';
+                    
+                    document.body.appendChild(sparkle);
+                    
+                    const animation = sparkle.animate([
+                        { transform: 'scale(0) rotate(0deg)', opacity: 0.8 },
+                        { transform: 'scale(1.5) rotate(180deg)', opacity: 0 }
+                    ], {
+                        duration: 1000,
+                        easing: 'ease-out'
+                    });
+                    
+                    animation.onfinish = () => sparkle.remove();
+                }
+            }
+            
+            function createVideoSparkles() {
+                const videoWrapper = document.querySelector('.portrait-video-container');
+                const rect = videoWrapper.getBoundingClientRect();
+                
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(() => {
+                        const sparkle = document.createElement('div');
+                        sparkle.innerHTML = '🎬';
+                        sparkle.style.position = 'fixed';
+                        sparkle.style.fontSize = '20px';
+                        sparkle.style.left = `${rect.left + Math.random() * rect.width}px`;
+                        sparkle.style.top = `${rect.top + Math.random() * rect.height}px`;
+                        sparkle.style.zIndex = '100';
+                        sparkle.style.pointerEvents = 'none';
+                        sparkle.style.opacity = '0';
+                        
+                        document.body.appendChild(sparkle);
+                        
+                        const animation = sparkle.animate([
+                            { transform: 'scale(0) rotate(0deg)', opacity: 0 },
+                            { transform: 'scale(1.5) rotate(360deg)', opacity: 0.8 },
+                            { transform: 'scale(0) rotate(720deg)', opacity: 0 }
+                        ], {
+                            duration: 1500,
+                            easing: 'ease-out'
+                        });
+                        
+                        animation.onfinish = () => sparkle.remove();
+                    }, i * 100);
+                }
+            }
+            
+            function createVideoHearts() {
+                const interval = setInterval(() => {
+                    if (specialVideo.paused || specialVideo.ended) {
+                        clearInterval(interval);
+                        return;
+                    }
+                    
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '💖';
+                    heart.style.position = 'fixed';
+                    heart.style.fontSize = '20px';
+                    heart.style.left = `${Math.random() * 100}vw`;
+                    heart.style.top = '100vh';
+                    heart.style.opacity = '0.7';
+                    heart.style.zIndex = '100';
+                    heart.style.pointerEvents = 'none';
+                    
+                    document.body.appendChild(heart);
+                    
+                    const animation = heart.animate([
+                        { transform: 'translateY(0) rotate(0deg)', opacity: 0.7 },
+                        { transform: `translateY(-${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                    ], {
+                        duration: 3000,
+                        easing: 'cubic-bezier(0.215, 0.610, 0.355, 1)'
+                    });
+                    
+                    animation.onfinish = () => heart.remove();
+                }, 500);
+                
+                // Stop after 10 seconds
+                setTimeout(() => clearInterval(interval), 10000);
+            }
+            
+            function createVideoEndCelebration() {
+                createHeartsBurst();
+                createConfetti();
+                
+                // Show ending message
+                setTimeout(() => {
+                    const message = "🎉 That's how special you are to me! Every moment with you is magical. ❤️";
+                    if (window.confirm(message + "\n\nWatch again?")) {
+                        specialVideo.currentTime = 0;
+                        specialVideo.play();
+                    }
+                }, 1000);
+            }
+            
+            // Video control functions
+            window.playVideo = function() {
+                specialVideo.play();
+            };
+            
+            window.pauseVideo = function() {
+                specialVideo.pause();
+            };
+            
+            window.restartVideo = function() {
+                specialVideo.currentTime = 0;
+                specialVideo.play();
+            };
+            
+            // Video thumbnail click handler
+            window.showVideoSection = function(event) {
+                event.stopPropagation();
+                videoButton.click();
+            };
+            
+            // Auto-create floating hearts occasionally
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    createFloatingHeart();
+                }
+            }, 3000);
+            
+            // Keyboard support
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' || e.code === 'Enter') {
+                    secretButton.click();
+                }
+                if (e.code === 'KeyG') {
+                    galleryButton.click();
+                }
+                if (e.code === 'KeyV') {
+                    videoButton.click();
+                }
+                if (e.code === 'Escape') {
+                    closeLightbox();
+                    if (isVideoOpen) {
+                        videoButton.click();
+                    }
+                }
+            });
+        });
+        
+        // Lightbox functions
+        function openLightbox(element) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const imgSrc = element.querySelector('img').src;
+            
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Prevent lightbox from closing when clicking on image
+        document.getElementById('lightboxImg')?.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    </script>
+</body>
+</html>
